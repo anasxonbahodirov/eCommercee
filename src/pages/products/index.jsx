@@ -18,9 +18,12 @@ export const Products = () => {
     error: categoryError,
   } = useGet("https://fakestoreapi.com/products/categories");
 
+  console.log("Category data:", categoryData); // Kategoriya ma’lumotlarini tekshirish
+
   if (productLoading || categoryLoading) return <Loader />;
   if (productError) return <Error error={productError} />;
   if (categoryError) return <Error error={categoryError} />;
+  if (!categoryData || categoryData.length === 0) return <p className="text-center text-gray-600 text-lg">Kategoriya topilmadi</p>;
 
   const filteredProducts = selectedCategory
     ? productData.filter((product) => product.category === selectedCategory)
@@ -54,11 +57,11 @@ export const Products = () => {
             </button>
           ))}
           <select
-            value={limit}
+            value={limit || ""}
             className="px-5 py-2 text-lg font-medium rounded-full shadow-md bg-blue-500 text-white hover:bg-blue-600 transition-all"
-            onChange={(e) => setLimit(parseInt(e.target.value))}
+            onChange={(e) => setLimit(e.target.value ? parseInt(e.target.value) : null)}
           >
-            <option value={null}>All</option>
+            <option value="">All</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15">15</option>
@@ -66,7 +69,6 @@ export const Products = () => {
           </select>
         </div>
 
-        {/* Mahsulotlar */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (

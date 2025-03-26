@@ -18,7 +18,6 @@ export const Products = () => {
     error: categoryError,
   } = useGet("https://fakestoreapi.com/products/categories");
 
-  console.log("Category data:", categoryData); // Kategoriya ma’lumotlarini tekshirish
 
   if (productLoading || categoryLoading) return <Loader />;
   if (productError) return <Error error={productError} />;

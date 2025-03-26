@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { usePost } from "../../hooks";
 
 export const Login = () => {
@@ -17,6 +17,7 @@ export const Login = () => {
       bodyData: { username, password },
       onSuccess: (data) => {
         localStorage.setItem("token", data.token);
+        toast.success("Muvaffaqiyatli tizimga kirdingiz!");
         navigate("/");
       },
       onError: () => {
@@ -27,6 +28,7 @@ export const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black">
+      <Toaster position="top-right" />
       <div className="w-full max-w-md bg-gray-900 p-8 rounded-3xl shadow-xl text-white">
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
         <form className="flex flex-col gap-4" onSubmit={login}>
